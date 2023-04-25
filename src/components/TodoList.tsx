@@ -14,7 +14,7 @@ export default function TodoList(props: PropsType) {
             </div>
             <ul>
                 <li><input type="checkbox" checked={true}/> <span>HTML & CSS</span></li>
-                <li><input type="checkbox" checked={true}/> <span>Java Script</span></li>
+                <li><input type="checkbox" checked={true}/> <span>JavaScript</span></li>
                 <li><input type="checkbox" checked={false}/> <span>React JS</span></li>
             </ul>
             <div>
