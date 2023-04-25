@@ -8,11 +8,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
     <App />
-  </React.StrictMode>
 );
-// rsf - create react component
+// rsf - create react component template in new file
 
 
 // If you want to start measuring performance in your app, pass a function
