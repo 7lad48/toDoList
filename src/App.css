@@ -13,6 +13,20 @@
   padding: 20px;
   transition: all 0.3s ease-in-out;
 }
+.todolist ul{
+  list-style: none;
+  padding: 0;
+}
+.todolist ul > li{
+  border-bottom: 1px dashed rgba( 0, 0, 0, 0.4);
+  font-size: 18px;
+  transition: all ease-in-out .25s;
+  padding: 5px;
+}
+.todolist ul > li:hover{
+  border-bottom: 1px solid rgba(0, 102, 204, 0.9);
+  cursor: pointer;
+}
 .todolist:hover{
   background-color: #f8f8f8;
   box-shadow: 2px 4px 8px 1px rgba(48, 82, 115, 0.25);
