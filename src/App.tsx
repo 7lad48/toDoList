@@ -25,13 +25,7 @@ function App(): JSX.Element {
         setTasks(newTasks);
     }
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        const changedTasks: TaskType[] = tasks.map((task) => {
-            if(task.id === taskId){
-                task.isDone = isDone
-            }
-            return task;
-        });
-        setTasks(changedTasks);
+        setTasks(tasks.map(task => task.id === taskId ? {...task, isDone} : task))
     }
     const getFilteredTasks = (task: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
         if(filter === 'active'){
@@ -50,6 +44,7 @@ function App(): JSX.Element {
                 changeFilter={OnChangeFilter}
                 addTask={addTask}
                 changeTaskStatus={changeTaskStatus}
+                filter={filter}
             />
         </div>
     );
