@@ -6,7 +6,8 @@ type TodoListPropsType = {
     tasks: TaskType[] // Array<TaskType>
     removeTask: (taskId: string) => void
     changeFilter: (filter: FilterValuesType) => void
-    addTask: (title:string)=>void
+    addTask: (title: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 export type TaskType = {
     id: string
@@ -19,30 +20,35 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    listTitle,
                                                    removeTask,
                                                    changeFilter,
-                                                    addTask,
+                                                   addTask,
+                                                   changeTaskStatus,
                                                }) => {
     const tasksList = tasks.map((el) => {
         const removeButtonHandler = () => {
             removeTask(el.id)
         }
+        const onChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+            const changedCheckboxStatus = e.currentTarget.checked;
+            changeTaskStatus(el.id, changedCheckboxStatus)
+        }
         return <li key={el.id}>
-            <input type="checkbox" checked={el.isDone}/>
+            <input type="checkbox" checked={el.isDone} onChange={onChangeCheckbox}/>
             <span>{el.title}</span>
             <button onClick={removeButtonHandler}>X</button>
         </li>
     })
     const [title, setTitle] = useState('');
     const addTaskButtonHandler = () => {
-        if(title.trim()){
+        if (title.trim()) {
             addTask(title.trim());
             setTitle('');
         }
     }
-    const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
-    const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>) => { // KeyboardEvent needs to be added import from 'react' manually
-         if(e.key === 'Enter') addTaskButtonHandler()
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => { // KeyboardEvent needs to be added import from 'react' manually
+        if (e.key === 'Enter') addTaskButtonHandler()
     }
     const setAllTasks = () => {
         changeFilter('all');

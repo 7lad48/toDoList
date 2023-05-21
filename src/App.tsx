@@ -24,6 +24,15 @@ function App(): JSX.Element {
         const newTasks = [newTask, ...tasks];
         setTasks(newTasks);
     }
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+        const changedTasks: TaskType[] = tasks.map((task) => {
+            if(task.id === taskId){
+                task.isDone = isDone
+            }
+            return task;
+        });
+        setTasks(changedTasks);
+    }
     const getFilteredTasks = (task: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
         if(filter === 'active'){
             return tasks.filter(el => !el.isDone)
@@ -35,13 +44,12 @@ function App(): JSX.Element {
     return (
         <div className="App">
             <TodoList
-                // tasks={getFilteredTasks(tasks, filter)}
                 tasks={filteredTasks}
                 listTitle={listTitle}
                 removeTask={removeTask}
                 changeFilter={OnChangeFilter}
                 addTask={addTask}
-                // changeFilter={(filter) => setFilter(filter)}
+                changeTaskStatus={changeTaskStatus}
             />
         </div>
     );
