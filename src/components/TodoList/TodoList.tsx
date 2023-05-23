@@ -2,12 +2,13 @@ import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterValuesType} from "../../App";
 
 type TodoListPropsType = {
+    id: string
     listTitle: string
     tasks: TaskType[] // Array<TaskType>
-    removeTask: (taskId: string) => void
-    changeFilter: (filter: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (taskId: string, todolistId: string) => void
+    changeFilter: ( todolistId:string, filterValue: FilterValuesType) => void
+    addTask: (title: string, todolistId: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     filter: FilterValuesType
 }
 export type TaskType = {
@@ -17,8 +18,9 @@ export type TaskType = {
 }
 
 const TodoList: React.FC<TodoListPropsType> = ({
-                                                   tasks,
+                                                   id,
                                                    listTitle,
+                                                   tasks,
                                                    removeTask,
                                                    changeFilter,
                                                    addTask,
@@ -26,10 +28,10 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    filter,
                                                }) => {
     const tasksList = tasks.map((el) => {
-        const removeButtonHandler = () => removeTask(el.id);
+        const removeButtonHandler = () => removeTask(el.id, id);
         const onChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
             const changedCheckboxStatus = e.currentTarget.checked;
-            changeTaskStatus(el.id, changedCheckboxStatus);
+            changeTaskStatus(el.id, changedCheckboxStatus, id);
         }
         return <li key={el.id} className={el.isDone ? 'is-done' : ''}>
             <input type="checkbox" checked={el.isDone} onChange={onChangeCheckbox}/>
@@ -41,7 +43,7 @@ const TodoList: React.FC<TodoListPropsType> = ({
     const [error, setError] = useState<string | null>(null);
     const addTaskButtonHandler = () => {
         if (title.trim()) {
-            addTask(title);
+            addTask(title, id);
             setTitle('');
         } else {
             setError('Введите название');
@@ -54,9 +56,9 @@ const TodoList: React.FC<TodoListPropsType> = ({
         setError(null);
         if (e.key === 'Enter') addTaskButtonHandler();
     }
-    const setAllTasks = () => changeFilter('all');
-    const setActiveTasks = () => changeFilter('active');
-    const setCompletedTasks = () => changeFilter('completed');
+    const setAllTasks = () => changeFilter(id,'all');
+    const setActiveTasks = () => changeFilter(id,'active');
+    const setCompletedTasks = () => changeFilter(id,'completed');
 
     return (
         <div className="todolist">
@@ -74,9 +76,11 @@ const TodoList: React.FC<TodoListPropsType> = ({
                 {tasksList}
             </ul>
             <div>
-                <button onClick={setAllTasks} className={ filter === 'all' ? 'active-filter' : ''}>All</button>
-                <button onClick={setActiveTasks} className={ filter === 'active' ? 'active-filter' : ''}>Active</button>
-                <button onClick={setCompletedTasks} className={ filter === 'completed' ? 'active-filter' : ''}>Completed</button>
+                <button onClick={setAllTasks} className={filter === 'all' ? 'active-filter' : ''}>All</button>
+                <button onClick={setActiveTasks} className={filter === 'active' ? 'active-filter' : ''}>Active</button>
+                <button onClick={setCompletedTasks}
+                        className={filter === 'completed' ? 'active-filter' : ''}>Completed
+                </button>
             </div>
         </div>
     );

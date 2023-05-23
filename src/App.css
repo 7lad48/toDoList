@@ -12,6 +12,7 @@
   border-radius: 10px;
   padding: 20px;
   transition: all 0.15s ease-in-out;
+  align-self: flex-start;
 }
 .todolist ul{
   list-style: none;
@@ -30,7 +31,7 @@
 .todolist:hover{
   background-color: #f8f8f8;
   box-shadow: 2px 4px 8px 1px rgba(48, 82, 115, 0.25);
-  transform: scale(0.998);
+  /*transform: scale(0.998);*/
 }
 .error {
   border: red 1px solid;
