@@ -6,10 +6,11 @@ type TodoListPropsType = {
     listTitle: string
     tasks: TaskType[] // Array<TaskType>
     removeTask: (taskId: string, todolistId: string) => void
-    changeFilter: ( todolistId:string, filterValue: FilterValuesType) => void
+    changeFilter: (todolistId: string, filterValue: FilterValuesType) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     filter: FilterValuesType
+    removeTodolist: (id: string) => void
 }
 export type TaskType = {
     id: string
@@ -26,6 +27,7 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    addTask,
                                                    changeTaskStatus,
                                                    filter,
+                                                   removeTodolist,
                                                }) => {
     const tasksList = tasks.map((el) => {
         const removeButtonHandler = () => removeTask(el.id, id);
@@ -56,13 +58,14 @@ const TodoList: React.FC<TodoListPropsType> = ({
         setError(null);
         if (e.key === 'Enter') addTaskButtonHandler();
     }
-    const setAllTasks = () => changeFilter(id,'all');
-    const setActiveTasks = () => changeFilter(id,'active');
-    const setCompletedTasks = () => changeFilter(id,'completed');
-
+    const setAllTasks = () => changeFilter(id, 'all');
+    const setActiveTasks = () => changeFilter(id, 'active');
+    const setCompletedTasks = () => changeFilter(id, 'completed');
+    const removeTodolistButton = () => removeTodolist(id);
     return (
         <div className="todolist">
             <h3>{listTitle}</h3>
+            <button onClick={removeTodolistButton}>X</button>
             <div>
                 <input
                     onChange={onChangeHandler}

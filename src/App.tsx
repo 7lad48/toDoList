@@ -9,6 +9,9 @@ type TodolistsType = {
     title: string
     filter: FilterValuesType
 }
+type TaskStateType = {
+    [key: string]: TaskType[]
+}
 function App(): JSX.Element {
     let todolistID1 = v1()
     let todolistID2 = v1()
@@ -18,7 +21,7 @@ function App(): JSX.Element {
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
-    let [tasks, setTasks] = useState({
+    let [tasks, setTasks] = useState<TaskStateType>({
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -54,7 +57,9 @@ function App(): JSX.Element {
         setTodolists(prev => prev.map( list => list.id === todolistId ? {...list, filter:filterValue} : list) );
     }
     const removeTodolist = (id:string) => {
-
+        setTodolists(prev => prev.filter(list => list.id !== id));
+        delete tasks[id]
+        setTasks({...tasks})
     }
     return (
         <div className="App">
@@ -77,9 +82,9 @@ function App(): JSX.Element {
                     addTask={addTask}
                     changeTaskStatus={changeTaskStatus}
                     filter={list.filter}
+                    removeTodolist={removeTodolist}
                 />
             })}
-
         </div>
     );
 }
