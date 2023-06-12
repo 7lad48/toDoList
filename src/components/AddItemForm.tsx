@@ -22,7 +22,7 @@ const AddItemForm:FC<AddItemFormType> = (props) => {
                 props.callback(title.trim());
                 setTitle("");
             } else {
-                setError("Title is required");
+                setError("Название обязательно");
             }
         }
     return (
