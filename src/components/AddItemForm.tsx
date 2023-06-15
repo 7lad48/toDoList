@@ -1,9 +1,12 @@
 import React, {FC, ChangeEvent, KeyboardEvent, useState} from 'react';
-type AddItemFormType ={
-    callback: (title: string)=>void;
+import {IconButton, TextField} from "@mui/material";
+import {ControlPoint} from "@mui/icons-material";
+
+type AddItemFormType = {
+    callback: (title: string) => void;
 }
 
-const AddItemForm:FC<AddItemFormType> = (props) => {
+const AddItemForm: FC<AddItemFormType> = (props) => {
 
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
@@ -18,22 +21,26 @@ const AddItemForm:FC<AddItemFormType> = (props) => {
         setTitle(e.currentTarget.value)
     }
     const addItemTitle = () => {
-            if (title.trim() !== "") {
-                props.callback(title.trim());
-                setTitle("");
-            } else {
-                setError("Название обязательно");
-            }
+        if (title.trim() !== "") {
+            props.callback(title.trim());
+            setTitle("");
+        } else {
+            setError("Название обязательно");
         }
+    }
     return (
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
+            <TextField id="standard-basic" label="Type value..." variant="outlined"
+                       value={title}
+                       onChange={onChangeHandler}
+                       onKeyPress={onKeyPressHandler}
+                       error={!!error}
+                       helperText={error}
             />
-            <button onClick={addItemTitle}>+</button>
-            {error && <div className="error-message">{error}</div>}
+
+            <IconButton onClick={addItemTitle} aria-label="add" color="success">
+                <ControlPoint/>
+            </IconButton>
         </div>
     );
 }
