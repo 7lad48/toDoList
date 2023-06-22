@@ -3,7 +3,7 @@ import {FilterValuesType} from '../App';
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, Checkbox, IconButton} from "@mui/material";
-import {Delete} from "@mui/icons-material";
+import {DeleteOutline, Remove} from "@mui/icons-material";
 
 export type TaskType = {
     id: string
@@ -39,7 +39,7 @@ export function Todolist(props: PropsType) {
     return <div className={'todolist'}>
         <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist} aria-label="delete" color="error">
-                <Delete />
+                <DeleteOutline />
             </IconButton>
         </h3>
         <AddItemForm callback={addTask}/>
@@ -57,9 +57,10 @@ export function Todolist(props: PropsType) {
                         <Checkbox
                                onChange={onChangeStatusHandler}
                                checked={task.isDone}/>
-                        {/*<span>{t.title} -- </span>*/}
                         <EditableSpan title={task.title} onChange={onChangeTitleHandler}/>
-                        <button onClick={onClickHandler}>x</button>
+                        <IconButton onClick={onClickHandler} aria-label="add" color="error">
+                            <Remove/>
+                        </IconButton>
                     </li>
                 })
             }

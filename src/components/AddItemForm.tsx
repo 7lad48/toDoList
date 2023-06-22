@@ -38,7 +38,7 @@ const AddItemForm: FC<AddItemFormType> = (props) => {
                        helperText={error}
             />
 
-            <IconButton onClick={addItemTitle} aria-label="add" color="success">
+            <IconButton onClick={addItemTitle} aria-label="add" color="primary">
                 <ControlPoint/>
             </IconButton>
         </div>

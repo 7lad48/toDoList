@@ -8,10 +8,10 @@ import {Container, Grid, Paper} from "@mui/material";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
-type TodolistStateType = {
+export type TodolistStateType = {
     [key: string]: TaskType[]
 }
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -48,19 +48,6 @@ function App() {
         tasks[todolistId] = [task, ...tasks[todolistId]];
         setTasks({...tasks});
     }
-
-    function changeStatus(todolistId: string, taskId: string, isDone: boolean) {
-        // let task = tasks[todolistId].find(t => t.id === taskId);
-        // if (task) {
-        //     task.isDone = isDone;
-        // }
-        // setTasks({...tasks});
-        setTasks({
-            ...tasks,
-            [todolistId]: tasks[todolistId].map(task => taskId === task.id ? {...task, isDone} : task)
-        });
-    }
-
     function changeTaskTitle(todolistId: string, taskId: string, newTitle: string) {
         // let task = tasks[todolistId].find(t => t.id === taskId);
         // if (task) {
@@ -72,7 +59,17 @@ function App() {
             [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title: newTitle} : task)
         })
     }
-
+    function changeStatus(todolistId: string, taskId: string, isDone: boolean) {
+        // let task = tasks[todolistId].find(t => t.id === taskId);
+        // if (task) {
+        //     task.isDone = isDone;
+        // }
+        // setTasks({...tasks});
+        setTasks({
+            ...tasks,
+            [todolistId]: tasks[todolistId].map(task => taskId === task.id ? {...task, isDone} : task)
+        });
+    }
     function changeFilter(todolistId: string, value: FilterValuesType) {
         // setFilter(value);
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter: value} : todolist));
