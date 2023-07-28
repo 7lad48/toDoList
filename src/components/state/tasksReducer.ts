@@ -39,14 +39,13 @@ export const tasksReducer = (state: TodolistStateType, action: ActionTypes): Tod
                 } : t)
             };
         case 'ADD-TODOLIST':
-            return {
-                ...state,
-                [action.todolistId]: []
-            }
+             return {...state, [action.todolistId]: []};
         case 'REMOVE-TODOLIST':
             let newState = {...state}
             delete newState[action.id]
             return newState
+        //  let {[action.id]:[], ...rest} = state
+        //  return rest
         default:
             throw new Error('action type is not found ');
     }
